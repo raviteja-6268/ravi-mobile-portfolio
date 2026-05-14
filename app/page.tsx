@@ -1,140 +1,418 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   User,
   Briefcase,
-  Code,
+  Code2,
+  Trophy,
   Mail,
-  Smartphone,
+  Home,
 } from "lucide-react";
 
-export default function Home() {
+const sections = [
+  {
+    title: "About",
+    icon: <User size={24} />,
+  },
+  {
+    title: "Skills",
+    icon: <Code2 size={24} />,
+  },
+  {
+    title: "Experience",
+    icon: <Briefcase size={24} />,
+  },
+  {
+    title: "Achievements",
+    icon: <Trophy size={24} />,
+  },
+  {
+    title: "Contact",
+    icon: <Mail size={24} />,
+  },
+];
+
+export default function HomePage() {
+  const [active, setActive] = useState("Home");
+
   return (
-    <main className="min-h-screen bg-black text-white flex items-center justify-center overflow-hidden">
-      
+    <main className="min-h-screen bg-[#050816] flex items-center justify-center p-10 overflow-hidden relative">
+
       {/* Background Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,255,120,0.15),transparent_70%)]" />
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-500/10 blur-3xl rounded-full" />
 
-      {/* Phone Frame */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        className="relative w-[360px] h-[740px] rounded-[45px] border border-neutral-700 bg-neutral-950 shadow-2xl overflow-hidden"
-      >
-        
-        {/* Top Bar */}
-        <div className="h-8 flex items-center justify-center border-b border-neutral-800">
-          <div className="w-24 h-2 rounded-full bg-neutral-700" />
-        </div>
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyan-500/10 blur-3xl rounded-full" />
 
-        {/* Content */}
-        <div className="p-6">
+      {/* LEFT SIDE */}
+      <div className="w-full max-w-7xl grid lg:grid-cols-2 gap-20 items-center relative z-10">
+
+        <div>
 
           {/* Profile */}
-          <div className="flex flex-col items-center mt-4">
-            <div className="w-24 h-24 rounded-full bg-green-500 flex items-center justify-center text-4xl font-bold">
-              RT
-            </div>
+          <div className="flex items-center gap-5">
 
-            <h1 className="text-3xl font-bold mt-4">
-              Ravi Teja
-            </h1>
+            {/* Profile Image */}
+            <div className="relative">
+                <div className="absolute inset-0 bg-cyan-400/30 blur-2xl rounded-full scale-110" />
+                    <img
+    src="/Photo copy.jpg"
+    alt="Ravi Teja"
+    className="relative w-28 h-28 rounded-full object-cover border-4 border-white/10 shadow-[0_20px_60px_rgba(59,130,246,0.45)]"
+  />
+</div>
 
-            <p className="text-green-400 mt-2 text-center">
-              Mobile QA Automation Engineer
-            </p>
+            <div>
 
-            <p className="text-neutral-400 text-sm mt-3 text-center">
-              Appium • Python • Android • Jenkins • CI/CD
-            </p>
-          </div>
+              <h1 className="text-5xl font-bold text-white">
+                Ravi Teja Attuluri
+              </h1>
 
-          {/* Metrics */}
-          <div className="grid grid-cols-2 gap-4 mt-8">
+              <p className="text-xl text-cyan-400 mt-2">
+                Mobile Automation Test Engineer
+              </p>
 
-            <Card title="200+" subtitle="Test Cases" />
-            <Card title="60%" subtitle="Coverage Uplift" />
-            <Card title="40%" subtitle="Manual Effort Reduced" />
-            <Card title="150+" subtitle="Bugs Debugged" />
-
-          </div>
-
-          {/* Apps */}
-          <div className="mt-10">
-
-            <h2 className="text-lg font-semibold mb-4 text-neutral-300">
-              Apps
-            </h2>
-
-            <div className="grid grid-cols-3 gap-6">
-
-              <AppIcon icon={<User />} label="About" />
-              <AppIcon icon={<Code />} label="Skills" />
-              <AppIcon icon={<Briefcase />} label="Projects" />
-              <AppIcon icon={<Smartphone />} label="Experience" />
-              <AppIcon icon={<Mail />} label="Contact" />
+              <p className="text-gray-400 mt-4 leading-8 max-w-lg">
+                Mobile QA Automation Engineer specializing in
+Google Pixel ecosystem testing, Appium automation,
+Android platform validation, scalable Python frameworks,
+and enterprise CI/CD quality engineering.
+              </p>
 
             </div>
+
           </div>
 
-          {/* Bottom CTA */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            className="w-full mt-12 bg-green-500 text-black font-semibold py-3 rounded-2xl"
-          >
-            Run Automation Suite
-          </motion.button>
+          {/* Navigation */}
+          <div className="mt-16 space-y-4">
+
+            {sections.map((section) => (
+
+              <motion.button
+                key={section.title}
+                whileHover={{ x: 8 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => setActive(section.title)}
+                className={`w-full flex items-center gap-5 px-6 py-5 rounded-3xl transition-all duration-300
+                ${
+                  active === section.title
+                    ? "bg-gradient-to-r from-blue-500 to-cyan-400 text-white shadow-[0_10px_40px_rgba(59,130,246,0.35)]"
+                    : "bg-white/5 border border-white/10 text-gray-300 backdrop-blur-xl hover:bg-white/10"
+                }`}
+              >
+
+                {section.icon}
+
+                <span className="text-lg font-medium">
+                  {section.title}
+                </span>
+
+              </motion.button>
+
+            ))}
+
+          </div>
 
         </div>
-      </motion.div>
+
+        {/* PHONE */}
+        <div className="flex justify-center">
+
+          <motion.div
+            className="relative"
+            animate={{
+              y: [0, -10, 0],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+            }}
+          >
+
+            {/* Glow */}
+            <div className="absolute inset-0 bg-cyan-500/20 blur-3xl rounded-[60px]" />
+
+            {/* Phone Body */}
+            <div className="relative w-[380px] h-[780px] rounded-[55px] bg-gradient-to-b from-neutral-700 to-black p-[6px] shadow-[0_40px_120px_rgba(0,0,0,0.8)]">
+
+              {/* Reflection */}
+              <div className="absolute left-2 top-10 bottom-10 w-[2px] bg-white/20 rounded-full blur-[1px]" />
+
+              {/* Screen */}
+              <div className="w-full h-full rounded-[48px] bg-[#0f1725] overflow-hidden relative">
+
+                {/* Wallpaper Glow */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.18),transparent_40%)]" />
+
+                {/* Camera */}
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-6 rounded-full bg-black z-50 border border-white/10" />
+
+                {/* Status Bar */}
+                <div className="h-14 flex items-center justify-between px-6 text-gray-400 relative z-10">
+
+                  <span>9:41</span>
+
+                  <div className="flex items-center gap-2">
+
+                    <div className="w-3 h-3 rounded-full bg-green-500" />
+
+                    <div className="w-6 h-3 border border-gray-500 rounded-sm">
+                      <div className="w-4 h-full bg-gray-300 rounded-sm" />
+                    </div>
+
+                  </div>
+
+                </div>
+
+                {/* SCREEN CONTENT */}
+                <AnimatePresence mode="wait">
+
+                  <motion.div
+                    key={active}
+                    initial={{
+                      opacity: 0,
+                      y: 50,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      y: 50,
+                    }}
+                    transition={{
+                      duration: 0.3,
+                    }}
+                    className="px-6 pb-10 h-full overflow-y-auto relative z-10"
+                  >
+
+                    {/* HOME */}
+                    {active === "Home" && (
+
+                      <div className="mt-12">
+
+                        <h2 className="text-3xl font-bold text-white">
+                          Welcome 👋
+                        </h2>
+
+                        <p className="text-gray-400 mt-4 leading-8">
+                          Mobile QA Automation Engineer working
+                          on Google Pixel ecosystem using Appium,
+                          Python and Android testing frameworks.
+                        </p>
+
+                      </div>
+
+                    )}
+
+                    {/* ABOUT */}
+                    {active === "About" && (
+                      <Card title="About Me">
+
+                        <p className="text-gray-300 leading-8">
+                          Mobile Automation Engineer with 3+ years
+                          of experience working in Google Pixel ecosystem.
+                        </p>
+
+                        <p className="text-gray-300 leading-8 mt-4">
+                          Specialized in Appium, Python,
+                          Android automation, Jenkins and CI/CD.
+                        </p>
+
+                      </Card>
+                    )}
+
+                    {/* SKILLS */}
+                    {active === "Skills" && (
+                      <Card title="Skills">
+
+                        <div className="grid grid-cols-2 gap-4">
+
+                          {[
+                            "Appium",
+                            "Python",
+                            "Android",
+                            "PyTest",
+                            "Jenkins",
+                            "API Testing",
+                            "ADB",
+                            "Git",
+                          ].map((skill) => (
+
+                            <motion.div
+                              whileHover={{
+                                scale: 1.03,
+                              }}
+                              key={skill}
+                              className="bg-white/5 border border-white/10 backdrop-blur-xl p-4 rounded-2xl text-center text-gray-200 font-medium"
+                            >
+                              {skill}
+                            </motion.div>
+
+                          ))}
+
+                        </div>
+
+                      </Card>
+                    )}
+
+                    {/* EXPERIENCE */}
+                    {active === "Experience" && (
+                      <Card title="Experience">
+
+                        <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-3xl p-5">
+
+                          <h3 className="text-2xl font-bold text-cyan-400">
+                            Wipro — Google Pixel Project
+                          </h3>
+
+                          <p className="text-gray-400 mt-2">
+                            Mobile QA Automation Engineer
+                          </p>
+
+                          <ul className="mt-6 space-y-3 text-gray-300 leading-7">
+
+                            <li>• Built Appium + Python framework</li>
+                            <li>• Automated 200+ test cases</li>
+                            <li>• 60% automation uplift</li>
+                            <li>• CI/CD integration with Jenkins</li>
+                            <li>• Android debugging using ADB logs</li>
+
+                          </ul>
+
+                        </div>
+
+                      </Card>
+                    )}
+
+                    {/* ACHIEVEMENTS */}
+                    {active === "Achievements" && (
+                      <Card title="Achievements">
+
+                        <div className="space-y-4">
+
+                          {[
+                            "60% Automation Coverage Increase",
+                            "200+ Automated Scenarios",
+                            "40% Regression Reduction",
+                            "Winner's Circle Award",
+                          ].map((item) => (
+
+                            <div
+                              key={item}
+                              className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-5 text-gray-300 font-medium"
+                            >
+                              {item}
+                            </div>
+
+                          ))}
+
+                        </div>
+
+                      </Card>
+                    )}
+
+                    {/* CONTACT */}
+                    {active === "Contact" && (
+                      <Card title="Contact">
+
+                        <div className="space-y-4">
+
+                          <ContactCard
+                            title="Email"
+                            value="ravitejaattuluri@gmail.com"
+                          />
+
+                          <ContactCard
+                            title="Phone"
+                            value="+91 9248781701"
+                          />
+
+                          <ContactCard
+                            title="LinkedIn"
+                            value="linkedin.com/in/ravitejaattuluri"
+                          />
+
+                        </div>
+
+                      </Card>
+                    )}
+
+                  </motion.div>
+
+                </AnimatePresence>
+
+                {/* Bottom Home Button */}
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20">
+
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setActive("Home")}
+                    className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 text-white flex items-center justify-center shadow-[0_10px_40px_rgba(59,130,246,0.4)]"
+                  >
+
+                    <Home />
+
+                  </motion.button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </motion.div>
+
+        </div>
+
+      </div>
+
     </main>
   );
 }
 
 function Card({
   title,
-  subtitle,
+  children,
 }: {
   title: string;
-  subtitle: string;
+  children: React.ReactNode;
 }) {
   return (
-    <motion.div
-      whileHover={{ scale: 1.05 }}
-      className="bg-neutral-900 border border-neutral-800 rounded-2xl p-4 text-center"
-    >
-      <h3 className="text-2xl font-bold text-green-400">
-        {title}
-      </h3>
+    <div className="mt-10">
 
-      <p className="text-sm text-neutral-400 mt-1">
-        {subtitle}
-      </p>
-    </motion.div>
+      <h2 className="text-3xl font-bold text-white mb-6">
+        {title}
+      </h2>
+
+      <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-[32px] p-6">
+        {children}
+      </div>
+
+    </div>
   );
 }
 
-function AppIcon({
-  icon,
-  label,
+function ContactCard({
+  title,
+  value,
 }: {
-  icon: React.ReactNode;
-  label: string;
+  title: string;
+  value: string;
 }) {
   return (
-    <motion.div
-      whileHover={{ scale: 1.1 }}
-      className="flex flex-col items-center"
-    >
-      <div className="w-16 h-16 rounded-2xl bg-neutral-900 border border-neutral-700 flex items-center justify-center text-green-400">
-        {icon}
-      </div>
+    <div className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-5">
 
-      <span className="text-sm mt-2 text-neutral-300">
-        {label}
-      </span>
-    </motion.div>
+      <p className="text-cyan-400 font-semibold">
+        {title}
+      </p>
+
+      <p className="text-gray-300 mt-2 break-all">
+        {value}
+      </p>
+
+    </div>
   );
 }
