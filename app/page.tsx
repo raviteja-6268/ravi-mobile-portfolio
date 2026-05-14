@@ -1,65 +1,140 @@
-import Image from "next/image";
+"use client";
+
+import { motion } from "framer-motion";
+import {
+  User,
+  Briefcase,
+  Code,
+  Mail,
+  Smartphone,
+} from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-black text-white flex items-center justify-center overflow-hidden">
+      
+      {/* Background Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,255,120,0.15),transparent_70%)]" />
+
+      {/* Phone Frame */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="relative w-[360px] h-[740px] rounded-[45px] border border-neutral-700 bg-neutral-950 shadow-2xl overflow-hidden"
+      >
+        
+        {/* Top Bar */}
+        <div className="h-8 flex items-center justify-center border-b border-neutral-800">
+          <div className="w-24 h-2 rounded-full bg-neutral-700" />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        {/* Content */}
+        <div className="p-6">
+
+          {/* Profile */}
+          <div className="flex flex-col items-center mt-4">
+            <div className="w-24 h-24 rounded-full bg-green-500 flex items-center justify-center text-4xl font-bold">
+              RT
+            </div>
+
+            <h1 className="text-3xl font-bold mt-4">
+              Ravi Teja
+            </h1>
+
+            <p className="text-green-400 mt-2 text-center">
+              Mobile QA Automation Engineer
+            </p>
+
+            <p className="text-neutral-400 text-sm mt-3 text-center">
+              Appium • Python • Android • Jenkins • CI/CD
+            </p>
+          </div>
+
+          {/* Metrics */}
+          <div className="grid grid-cols-2 gap-4 mt-8">
+
+            <Card title="200+" subtitle="Test Cases" />
+            <Card title="60%" subtitle="Coverage Uplift" />
+            <Card title="40%" subtitle="Manual Effort Reduced" />
+            <Card title="150+" subtitle="Bugs Debugged" />
+
+          </div>
+
+          {/* Apps */}
+          <div className="mt-10">
+
+            <h2 className="text-lg font-semibold mb-4 text-neutral-300">
+              Apps
+            </h2>
+
+            <div className="grid grid-cols-3 gap-6">
+
+              <AppIcon icon={<User />} label="About" />
+              <AppIcon icon={<Code />} label="Skills" />
+              <AppIcon icon={<Briefcase />} label="Projects" />
+              <AppIcon icon={<Smartphone />} label="Experience" />
+              <AppIcon icon={<Mail />} label="Contact" />
+
+            </div>
+          </div>
+
+          {/* Bottom CTA */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            className="w-full mt-12 bg-green-500 text-black font-semibold py-3 rounded-2xl"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            Run Automation Suite
+          </motion.button>
+
         </div>
-      </main>
-    </div>
+      </motion.div>
+    </main>
+  );
+}
+
+function Card({
+  title,
+  subtitle,
+}: {
+  title: string;
+  subtitle: string;
+}) {
+  return (
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      className="bg-neutral-900 border border-neutral-800 rounded-2xl p-4 text-center"
+    >
+      <h3 className="text-2xl font-bold text-green-400">
+        {title}
+      </h3>
+
+      <p className="text-sm text-neutral-400 mt-1">
+        {subtitle}
+      </p>
+    </motion.div>
+  );
+}
+
+function AppIcon({
+  icon,
+  label,
+}: {
+  icon: React.ReactNode;
+  label: string;
+}) {
+  return (
+    <motion.div
+      whileHover={{ scale: 1.1 }}
+      className="flex flex-col items-center"
+    >
+      <div className="w-16 h-16 rounded-2xl bg-neutral-900 border border-neutral-700 flex items-center justify-center text-green-400">
+        {icon}
+      </div>
+
+      <span className="text-sm mt-2 text-neutral-300">
+        {label}
+      </span>
+    </motion.div>
   );
 }
